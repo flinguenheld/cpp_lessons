@@ -3,18 +3,22 @@
 #include <vector>
 #include <numeric>
 
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
 using std::vector;
 using std::cout;
 using std::string;
 
 
-// For loops
+// FOR LOOPS-----------------------------------------
 void PrintBoard(const vector<vector<int>> &board)
 {
     // range-based loop
-    for (const vector<int>i: board){
-        for (const int j: i){
-            cout << j;
+    for (const vector<int>b: board){
+        for (const int i: b){
+            cout << i;
         }
         cout << "\n";
     }
@@ -26,16 +30,38 @@ void PrintBoard(const vector<vector<int>> &board)
         cout << "\n";
     }
 }
+// STREAMS - FILE / STRING --------------------------
+vector<vector<int>> ReadBoardFile(const string &path)
+{
+    vector<vector<int>> board;
+    std::ifstream ifs (path);
 
+    string line;
+    while (std::getline(ifs, line)) {
 
+        vector<int> v;
+        std::istringstream stream(line);
+
+        int i;
+        char c;
+        while (stream >> i >> c && c == ','){
+            v.push_back(i);
+        }
+        board.push_back(v);
+    }
+
+    return board;
+}
+
+// --------------------------------------------------
 int main (int argc, char *argv[])
 {
 
     vector<vector<int>> board {{0, 1, 0, 9, 3, 0},
-        {0, 1, 0, 0, 0, 0},
-        {0, 1, 0, 0, 0, 0},
-        {0, 1, 0, 0, 0, 0},
-        {0, 0, 0, 0, 1, 0}};
+                               {0, 1, 0, 0, 0, 0},
+                               {0, 1, 0, 0, 0, 0},
+                               {0, 1, 0, 0, 0, 0},
+                               {0, 0, 0, 0, 1, 0}};
 
     PrintBoard(board);
 
