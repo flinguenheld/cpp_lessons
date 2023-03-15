@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/hellooo.dir/main.cpp.o CMakeFiles/hellooo.dir/src/hello.cpp.o CMakeFiles/hellooo.dir/src/random.cpp.o -o hellooo 
