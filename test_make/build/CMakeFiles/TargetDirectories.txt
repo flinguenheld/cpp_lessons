@@ -1,3 +1,0 @@
-/home/flo/cpp/cpp_lessons/test_make/build/CMakeFiles/hellooo.dir
-/home/flo/cpp/cpp_lessons/test_make/build/CMakeFiles/edit_cache.dir
-/home/flo/cpp/cpp_lessons/test_make/build/CMakeFiles/rebuild_cache.dir
