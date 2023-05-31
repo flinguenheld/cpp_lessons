@@ -28,6 +28,7 @@ CXX_OBJECTS = $(patsubst ${SOURCE_DIR}/%.cpp, ${BUILD_DIR}/%.o, $(CXX_SOURCES))
 # targets: prerequisites
 # 	command
 # 	command
+# ⚠️ Each command is run in its own shell ⚠️
 
 build: mkdir ${CXX_OBJECTS}
 	@echo "Sources : " ${CXX_SOURCES}
@@ -38,7 +39,7 @@ mkdir:
 	mkdir -p ${BUILD_DIR}
 
 execute:
-	./${OUTPUT}
+	./${BUILD_DIR}/${OUTPUT}
 
 clean:
 	rm -rf ${BUILD_DIR}
