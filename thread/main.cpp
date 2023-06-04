@@ -1,6 +1,7 @@
 #include <array>
 #include <chrono>
 #include <iostream>
+#include <map>
 #include <memory>
 #include <numeric>
 #include <ostream>
@@ -11,20 +12,58 @@
 #include "vehicle.h"
 
 // ----------------------------------------------------------------------------------------------------
-// Example with a specific class method (instead of () ) -----------------------------------------------
+// Example multiple threads ---------------------------------------------------------------------------
+
+class Something {
+public:
+  Something(int sleeping_time, std::string name) : _sleeping_time(sleeping_time), _name(name){};
+
+  void launch() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(100 * _sleeping_time));
+    std::cout << "Let's go for " << _name << ": " << _sleeping_time * 100 << " ms" << std::endl;
+  };
+
+  void done() { std::cout << "Thread " << _name << " done." << std::endl; }
+
+private:
+  int _sleeping_time;
+  std::string _name;
+};
 
 int main(int argc, char *argv[]) {
 
-  auto v1 = std::make_shared<Vehicle>(100);
+  std::map<std::shared_ptr<Something>, std::thread> threads;
 
-  auto t1 = std::thread(&Vehicle::up_and_show_id, v1, 5, "Honda", 100);
-  auto t2 = std::thread(&Vehicle::up_and_show_id, v1, 20, "V25", 50);
+  for (int i = 10; i > 1; --i) {
 
-  t1.join();
-  t2.join();
+    auto ptr = std::make_shared<Something>(i, "Thread " + std::to_string(i));
+    threads[ptr] = std::thread(&Something::launch, ptr);
+  }
+
+  for (auto &t : threads) {
+
+    t.second.join();
+    t.first->done();
+  }
 
   return 0;
 }
+
+// ----------------------------------------------------------------------------------------------------
+// Example with a specific class method (instead of () ) ----------------------------------------------
+
+// int main(int argc, char *argv[]) {
+//
+//   auto v1 = std::make_shared<Vehicle>(100);
+//
+//   auto t1 = std::thread(&Vehicle::up_and_show_id, v1, 5, "Honda", 100);
+//   auto t2 = std::thread(&Vehicle::up_and_show_id, v1, 20, "V25", 50);
+//
+//   t1.join();
+//   t2.join();
+//
+//   return 0;
+// }
 
 // ----------------------------------------------------------------------------------------------------
 // Example with variatic function ---------------------------------------------------------------------
