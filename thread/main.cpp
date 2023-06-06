@@ -30,24 +30,24 @@ private:
   std::string _name;
 };
 
-int main(int argc, char *argv[]) {
-
-  std::map<std::shared_ptr<Something>, std::thread> threads;
-
-  for (int i = 10; i > 1; --i) {
-
-    auto ptr = std::make_shared<Something>(i, "Thread " + std::to_string(i));
-    threads[ptr] = std::thread(&Something::launch, ptr);
-  }
-
-  for (auto &t : threads) {
-
-    t.second.join();
-    t.first->done();
-  }
-
-  return 0;
-}
+// int main(int argc, char *argv[]) {
+//
+//   std::map<std::shared_ptr<Something>, std::thread> threads;
+//
+//   for (int i = 10; i > 1; --i) {
+//
+//     auto ptr = std::make_shared<Something>(i, "Thread " + std::to_string(i));
+//     threads[ptr] = std::thread(&Something::launch, ptr);
+//   }
+//
+//   for (auto &t : threads) {
+//
+//     t.second.join();
+//     t.first->done();
+//   }
+//
+//   return 0;
+// }
 
 // ----------------------------------------------------------------------------------------------------
 // Example with a specific class method (instead of () ) ----------------------------------------------
