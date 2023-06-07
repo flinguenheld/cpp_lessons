@@ -32,15 +32,15 @@ private:
   std::string _message;
 };
 
-int main(int argc, char *argv[]) {
-
-  auto my_test = Test("Mange ton chien");
-  auto future = std::async(&Test::hello, my_test, 2000);
-  // future.wait();
-  std::cout << "Message from thread: " << future.get() << std::endl;
-
-  return 0;
-}
+// int main(int argc, char *argv[]) {
+//
+//   auto my_test = Test("Mange ton chien");
+//   auto future = std::async(&Test::hello, my_test, 2000);
+//   // future.wait();
+//   std::cout << "Message from thread: " << future.get() << std::endl;
+//
+//   return 0;
+// }
 
 // ----------------------------------------------------------------------------------------------------
 // Compare async & deferred ---------------------------------------------------------------------------
