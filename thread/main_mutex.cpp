@@ -17,12 +17,12 @@ void add_and_print(std::shared_ptr<int> val, int nb, int times) {
 
   for (int i = 0; i < times; ++i) {
 
-    std::unique_lock<std::mutex> lg(mtx); // Add std::defer_lock to unlock on start
+    std::unique_lock<std::mutex> ul(mtx); // Add std::defer_lock to unlock on start
     *val += nb;
     std::cout << "Add " << nb << ": " << *val << std::endl;
 
-    lg.unlock(); // Release the sleep
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    ul.unlock(); // Release the sleep
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
   }
 }
 
@@ -33,12 +33,15 @@ int main(int argc, char *argv[]) {
   auto futures = std::vector<std::future<void>>();
 
   for (int i = 0; i < 1000; ++i) {
-    futures.emplace_back(std::async(add_and_print, val, 2, 10));
-    threads.emplace_back(std::thread(add_and_print, val, 5, 10));
+    futures.emplace_back(std::async(add_and_print, val, 2, 100));
+    threads.emplace_back(std::thread(add_and_print, val, 5, 100));
   }
 
   for (auto &t : threads) {
     t.join();
+  }
+  for (auto &f : futures) {
+    f.wait();
   }
 
   return 0;
